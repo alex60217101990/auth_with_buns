@@ -73,31 +73,16 @@ func main() {
 	ctx_log, cancel_log := context.WithCancel(context.Background())
 	go logger.Subscriber(ctx_log)
 
-	for k, v := range Env {
-		fmt.Println(k + " => " + v)
-	}
-
-	// db = models.NewDB(&Env, logger)
-	// db.ChangeCheme()
-
 	// [Server instance block]
 	instance = server.NewInstance(logger, &Env)
 	go instance.Start()
 	// [Server instance block]
-
-	// logger.Println(logs.NewError(
-	// 	"cassandra", "test error message 2",
-	// ))
-
-	//ctx := context.WithValue(context.Background(), "db", db)
 
 	for {
 		select {
 		case <-finishUP:
 			fmt.Println("Stoped")
 			instance.Shutdown()
-			//time.Sleep(10 * time.Second)
-			// db.Close()
 			<-time.After(time.Duration(7) * time.Second)
 			cancel_log()
 			done <- struct{}{}

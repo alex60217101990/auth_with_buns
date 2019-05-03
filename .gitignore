@@ -1,0 +1,11 @@
+#
+*.env
+#
+logs/
+#
+n1data
+#
+n2data
+#
+redis-data
+
